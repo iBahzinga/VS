@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * GUI to start the application
  *
  */
-public class GUIServerClient extends Application {
+public class GUIStart extends Application {
 
     private String font;
     private int fontSize;
@@ -29,7 +29,7 @@ public class GUIServerClient extends Application {
     /**
      * Constructor
      */
-    public GUIServerClient() {
+    public GUIStart() {
         this.font = "Arial";
         this.fontSize = 12;
         this.fontSizeHeader = 20;
