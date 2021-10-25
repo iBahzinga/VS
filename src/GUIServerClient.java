@@ -112,6 +112,7 @@ public class GUIServerClient extends Application {
 
     /**
      * .
+     * Dies ist ein Test
      * @param args
      */
     public static void main(String[] args) {
