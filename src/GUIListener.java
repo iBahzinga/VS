@@ -1,69 +1,65 @@
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- *
- */
-public class GUIClient {
+public class GUIListener {
 
     private String font;
     private int fontSize;
     private int fontSizeHeader;
     private Stage stage;
+    private Client client;
 
-    /**
-     * Constructor
-     * @param font
-     * @param fontSize
-     * @param fontSizeHeader
-     * @param stage
-     */
-    public GUIClient(String font, int fontSize, int fontSizeHeader, Stage stage){
+    public GUIListener(String font, int fontSize, int fontSizeHeader, Stage stage, Client client) {
         this.font = font;
         this.fontSize = fontSize;
         this. fontSizeHeader = fontSizeHeader;
         this.stage = stage;
+        this.client = client;
     }
 
     /**
-     * Configuration of the form "Client"
+     *
      * @throws Exception
      */
-    public void sending() throws Exception {
+    protected void receiving() throws Exception {
         StackPane pane = new StackPane();
+        stage.setTitle("Distributed systems");
 
         /* Set label */
-        final Label headline = new Label("Client");
+        final Label headline = new Label("Server");
         headline.setFont(new Font(font, fontSizeHeader));
 
+
         /* Textfield */
-        TextField writeField = new TextField();
-        writeField.setPrefWidth(350);
-        writeField.setPromptText("Geben Sie hier ihren Text ein");
+        TextArea receivedText = new TextArea();
+        receivedText.setPrefWidth(350);
+        receivedText.setPrefHeight(200);
+        receivedText.setEditable(false);
 
-        /* Button senden */
-        Button button_send = new Button();
-        button_send.setText("Senden");
-        button_send.setOnAction(click -> {
-            String text = writeField.getText();
-        });
 
-        /* Button clear */
-        Button button_clear = new Button();
-        button_clear.setText("Clear");
-        button_clear.setOnAction(clear -> {
-            writeField.clear();
+        Button restartButton = new Button();
+        restartButton.setText("Update ");
+        restartButton.setOnAction(restart ->
+        {
+            System.out.println( "Restarting Server app!" );
+            stage.close();
+            Platform.runLater( () -> {
+                try {
+                    new GUIListener(font, fontSize, fontSizeHeader, new Stage(), client).receiving();
+                } catch (Exception e) {
+                    System.err.println("Exception: " + e.toString());
+                    e.printStackTrace();
+                }
+            });
         });
 
         /* Button exit */
@@ -79,12 +75,12 @@ public class GUIClient {
 
         /* Horizontal box (Text field) */
         HBox textField = new HBox();
-        textField.getChildren().addAll(writeField);
+        textField.getChildren().addAll(receivedText);
 
         /* Horizontal box (buttons) */
         HBox buttons = new HBox();
         buttons.setSpacing(20);
-        buttons.getChildren().addAll(button_send, button_clear, closeButton);
+        buttons.getChildren().addAll(restartButton, closeButton);
 
         /* vertical box */
         VBox box = new VBox();
@@ -96,5 +92,6 @@ public class GUIClient {
         pane.getChildren().addAll(box);
         stage.setScene(new Scene(pane));
         stage.show();
+
     }
 }

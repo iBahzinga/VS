@@ -12,10 +12,30 @@ public class Client /*implements MessageService*/ {
 
     }
 
+    protected void send (String text) {
+        try {
+            //Getting registry
+            Registry registry = LocateRegistry.getRegistry(null);
+
+            //Looking up the registry for remote obj
+            MessageService stub = (MessageService) registry.lookup("Hello");
+
+            //Calling remote method
+            stub.newMessage(text);
+
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+
+
+
     /**
      * Main method
      * @param args number of args given
      */
+    /*
     public static void main(String[] args){
         try {
             //Getting registry
@@ -31,5 +51,7 @@ public class Client /*implements MessageService*/ {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
+
     }
+     */
 }

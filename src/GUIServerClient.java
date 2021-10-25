@@ -22,8 +22,9 @@ public class GUIServerClient extends Application {
     private String font;
     private int fontSize;
     private int fontSizeHeader;
-    private GUIClient writer;
-    private GUIServer listener;
+    private GUIWriter writer;
+    private GUIListener listener;
+    private Client client;
 
     /**
      * Constructor
@@ -32,6 +33,7 @@ public class GUIServerClient extends Application {
         this.font = "Arial";
         this.fontSize = 12;
         this.fontSizeHeader = 20;
+        client = new Client();
     }
 
     /**
@@ -67,7 +69,7 @@ public class GUIServerClient extends Application {
         writeButton.setText("Redakteur");
         writeButton.setOnAction(actionWrite -> {
             Stage secondaryStage = new Stage();
-            writer = new GUIClient(font, fontSize, fontSizeHeader, secondaryStage);
+            writer = new GUIWriter(font, fontSize, fontSizeHeader, secondaryStage, client);
             try {
                 writer.sending();
              } catch (Exception e) {
@@ -80,7 +82,7 @@ public class GUIServerClient extends Application {
         listenButton.setText("Lese");
         listenButton.setOnAction(sctionListen -> {
             Stage thirdStage = new Stage();
-            listener = new GUIServer(font, fontSize, fontSizeHeader, thirdStage);
+            listener = new GUIListener(font, fontSize, fontSizeHeader, thirdStage, client);
             try {
                 listener.receiving();
             } catch (Exception e){
