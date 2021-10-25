@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -19,20 +20,19 @@ import javafx.stage.Stage;
  */
 public class GUIStart extends Application {
 
-    private String font;
-    private int fontSize;
-    private int fontSizeHeader;
-    private GUIWriter writer;
-    private GUIListener listener;
+    private final String font;
+    private final int fontSize;
+    private final int fontSizeHeader;
+    private GUIClient guiClient;
     private Client client;
 
     /**
      * Constructor
      */
     public GUIStart() {
-        this.font = "Arial";
-        this.fontSize = 12;
-        this.fontSizeHeader = 20;
+        font = "Arial";
+        fontSize = 12;
+        fontSizeHeader = 20;
         client = new Client();
     }
 
@@ -61,31 +61,23 @@ public class GUIStart extends Application {
         StackPane pane = new StackPane();
 
         /* Set label */
-        final Label headline = new Label("Server-Client");
+        final Label headline = new Label("Set name");
         headline.setFont(new Font(font, fontSizeHeader));
 
-        /* Buttons */
-        Button writeButton = new Button();
-        writeButton.setText("Redakteur");
-        writeButton.setOnAction(actionWrite -> {
-            Stage secondaryStage = new Stage();
-            writer = new GUIWriter(font, fontSize, fontSizeHeader, secondaryStage, client);
-            try {
-                writer.sending();
-             } catch (Exception e) {
-                System.err.println("Exception: " + e.toString());
-                e.printStackTrace();
-            }
-        });
+        /* Textfield */
+        TextField nameField = new TextField();
+        nameField.setPrefWidth(350);
+        nameField.setPromptText("Geben Sie einen Namen ein");
 
-        Button listenButton = new Button();
-        listenButton.setText("Rezeption");
-        listenButton.setOnAction(sctionListen -> {
-            Stage thirdStage = new Stage();
-            listener = new GUIListener(font, fontSize, fontSizeHeader, thirdStage, client);
+        /* Buttons */
+        Button ok_button = new Button();
+        ok_button.setText("OK");
+        ok_button.setOnAction( ok -> {
+            guiClient = new GUIClient(font, fontSize, fontSizeHeader, client, nameField.getText());
             try {
-                listener.receiving();
-            } catch (Exception e){
+                guiClient.startClient(new Stage());
+                primaryStage.close();
+             } catch (Exception e) {
                 System.err.println("Exception: " + e.toString());
                 e.printStackTrace();
             }
@@ -99,11 +91,11 @@ public class GUIStart extends Application {
         });
 
         HBox buttons = new HBox();
-        buttons.getChildren().addAll(writeButton, listenButton, closeButton);
+        buttons.getChildren().addAll(ok_button, closeButton);
         buttons.setSpacing(20);
 
         VBox vertical = new VBox();
-        vertical.getChildren().addAll(headline, buttons);
+        vertical.getChildren().addAll(headline, nameField, buttons);
         vertical.setPadding(new Insets(15, 15, 15, 15));
         vertical.setSpacing(15);
 
