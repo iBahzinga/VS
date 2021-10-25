@@ -35,7 +35,7 @@ public class GUIListener {
         stage.setTitle("Distributed systems");
 
         /* Set label */
-        final Label headline = new Label("Server");
+        final Label headline = new Label("Client-Rezeption");
         headline.setFont(new Font(font, fontSizeHeader));
 
 

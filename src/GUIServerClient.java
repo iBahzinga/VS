@@ -79,7 +79,7 @@ public class GUIServerClient extends Application {
         });
 
         Button listenButton = new Button();
-        listenButton.setText("Lese");
+        listenButton.setText("Rezeption");
         listenButton.setOnAction(sctionListen -> {
             Stage thirdStage = new Stage();
             listener = new GUIListener(font, fontSize, fontSizeHeader, thirdStage, client);

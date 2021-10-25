@@ -47,7 +47,7 @@ public class GUIWriter {
         stage.setTitle("Distributed systems");
 
         /* Set label */
-        final Label headline = new Label("Client");
+        final Label headline = new Label("Client-Redaktion");
         headline.setFont(new Font(font, fontSizeHeader));
 
         /* Textfield */
