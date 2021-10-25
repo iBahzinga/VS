@@ -111,7 +111,7 @@ public class GUIServerClient extends Application {
     }
 
     /**
-     *
+     * .
      * @param args
      */
     public static void main(String[] args) {
