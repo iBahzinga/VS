@@ -17,11 +17,11 @@ import javafx.stage.Stage;
  */
 public class GUIWriter {
 
-    private String font;
-    private int fontSize;
-    private int fontSizeHeader;
-    private Stage stage;
-    private Client client;
+    private final String font;
+    private final int fontSize;
+    private final int fontSizeHeader;
+    private final Stage stage;
+    private final Client client;
 
     /**
      * Constructor
@@ -33,7 +33,7 @@ public class GUIWriter {
     public GUIWriter(String font, int fontSize, int fontSizeHeader, Stage stage, Client client){
         this.font = font;
         this.fontSize = fontSize;
-        this. fontSizeHeader = fontSizeHeader;
+        this.fontSizeHeader = fontSizeHeader;
         this.stage = stage;
         this.client = client;
     }

@@ -4,6 +4,7 @@ import java.rmi.registry.Registry;
 
 public class Client /*implements MessageService*/ {
     private static String response;
+    private String clientID;
 
     /**
      * Constructor
@@ -29,29 +30,11 @@ public class Client /*implements MessageService*/ {
         }
     }
 
-
-
-    /**
-     * Main method
-     * @param args number of args given
-     */
-    /*
-    public static void main(String[] args){
-        try {
-            //Getting registry
-            Registry registry = LocateRegistry.getRegistry(null);
-
-            //Looking up the registry for remote obj
-            MessageService stub = (MessageService) registry.lookup("Hello");
-
-            //Calling remote method
-            stub.newMessage();
-
-        } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
-            e.printStackTrace();
-        }
-
+    public String getClientID() {
+        return clientID;
     }
-     */
+
+    protected void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
 }

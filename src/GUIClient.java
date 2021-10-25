@@ -18,17 +18,15 @@ public class GUIClient {
     private GUIWriter writer;
     private GUIListener listener;
     private final Client client;
-    private final String clientName;
 
     /**
      * Constructor
      */
-    public GUIClient (String font, int fontSize, int fontSizeHeader, Client client, String clientName) {
+    public GUIClient (String font, int fontSize, int fontSizeHeader, Client client) {
         this.font = font;
         this.fontSize = fontSize;
         this.fontSizeHeader = fontSizeHeader;
         this.client = client;
-        this.clientName = clientName;
     }
 
     /**
@@ -45,7 +43,7 @@ public class GUIClient {
         headline.setFont(new Font(font, fontSizeHeader));
 
         /* Set 2nd label */
-        final Label subheadline = new Label("Hallo " + clientName);
+        final Label subheadline = new Label("Hallo " + client.getClientID());
         headline.setFont(new Font(font, fontSize));
 
         /* Buttons */

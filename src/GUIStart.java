@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.net.InetAddress;
+
 /**
  * @author Daniel Dichte
  * @author Pascal Kießler
@@ -73,8 +75,10 @@ public class GUIStart extends Application {
         Button ok_button = new Button();
         ok_button.setText("OK");
         ok_button.setOnAction( ok -> {
-            guiClient = new GUIClient(font, fontSize, fontSizeHeader, client, nameField.getText());
             try {
+                String clientID = nameField.getText() + "@" + InetAddress.getLocalHost().getHostName();
+                client.setClientID(clientID);
+                guiClient = new GUIClient(font, fontSize, fontSizeHeader, client);
                 guiClient.startClient(new Stage());
                 primaryStage.close();
              } catch (Exception e) {
