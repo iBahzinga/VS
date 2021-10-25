@@ -13,7 +13,7 @@ public class Client /*implements MessageService*/ {
     }
 
     /**
-     * Main method
+     * Main method.
      * @param args number of args given
      */
     public static void main(String[] args){
