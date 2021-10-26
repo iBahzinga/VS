@@ -1,4 +1,9 @@
+
+
+
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -10,9 +15,11 @@ import java.util.Queue;
 public class ImplServer implements MessageService{
 
     private int counterQueue;
+    private Queue deliveryQueue;
 
     public ImplServer () {
         counterQueue = 1;
+        deliveryQueue = new LinkedList();
     }
 
     @Override
@@ -34,23 +41,30 @@ public class ImplServer implements MessageService{
      * @throws RemoteException
      */
     public void newMessage(String clientID, String message) throws RemoteException {
-        Queue deliveryQueue = new LinkedList();
-        deliveryQueue = unnamed (deliveryQueue, message);
+
+        updateQueue(message);
 
         /* dient nur noch zu testzwecken */
         System.out.println(message);
     }
 
     /**
-     *
+     * Update the message and add the message to the queue
+     * in case the queue have 5 elements, die first message will be deleted and the new message will be added to the queue.
+     * @param message A message from the client
      */
-    public Queue unnamed (Queue deliveryQueue, String message) {
-        String newMEssage = counterQueue + " : " + message + " - " +
+    private void updateQueue(String message) {
+        Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message);
         if (counterQueue <= 5 ) {
-            deliveryQueue.add(message);
+            deliveryQueue.add(newMessage);
         } else {
             deliveryQueue.remove();
-            deliveryQueue.add(message);
+            deliveryQueue.add(newMessage);
         }
+    }
+
+    private String builtMessages() {
+
+        return null;
     }
 }
