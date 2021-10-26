@@ -63,8 +63,21 @@ public class ImplServer implements MessageService{
         }
     }
 
+    /**
+     * built the next message to send it
+     * @return the message containing the ClientID, messageID, the message and the time stamp
+     */
     private String builtMessages() {
-
-        return null;
+        Message message = null;
+        String nextMessage = null;
+        Queue temp = new LinkedList();
+        for (int i = 0; i < 5; i++){
+            if (!deliveryQueue.isEmpty()) {
+                if (deliveryQueue.element() instanceof Message)
+                    message = (Message) deliveryQueue.element();
+                    nextMessage = "<ClientID>" + "-" + message.getMessageID() + ":" + message.getMessage() + ", " + message.getTimestamp();
+            }
+        }
+        return nextMessage;
     }
 }

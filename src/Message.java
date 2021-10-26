@@ -30,7 +30,7 @@ public class Message {
      * returns the ID of the message
      * @return ID of the message
      */
-    private int getMessageID() {
+    public int getMessageID() {
         return messageID;
     }
 
@@ -38,7 +38,7 @@ public class Message {
      * get the timestamp of the message
      * @return timestamp of message
      */
-    private String getTimestamp(){
+    public String getTimestamp(){
         return timestamp;
     }
 
@@ -46,7 +46,7 @@ public class Message {
      * geht the message
      * @return get message
      */
-    private String getMessage() {
+    public String getMessage() {
         return message;
     }
 
