@@ -18,7 +18,6 @@ import java.net.InetAddress;
  * @author Pascal Kießler
  *
  * GUI to start the application
- *
  */
 public class GUIStart extends Application {
 
@@ -56,6 +55,7 @@ public class GUIStart extends Application {
 
     @Override
     /**
+     *
      * @param
      */
     public void start(Stage primaryStage) throws Exception {

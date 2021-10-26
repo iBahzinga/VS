@@ -10,6 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ *  * @author Daniel Dichte
+ *  * @author Pascal Kießler
+ *
+ */
 public class GUIClient {
 
     private final String font;
