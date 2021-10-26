@@ -10,7 +10,6 @@ public class Client /*implements MessageService*/ {
      * Constructor
      */
     public Client () {
-
     }
 
     protected void send (String text) {
