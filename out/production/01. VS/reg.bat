@@ -1,3 +1,3 @@
 @echo off
-set path=.;C:\Program Files\Java\jdk-17.0.1\bin
+set path=.;C:\Users\Pascal\.jdks\openjdk-17.0.1\bin
 start rmiregistry
