@@ -8,6 +8,7 @@ public class Message {
     private int messageID;
     private String timestamp;
     private String message;
+    private String clientID;
 
     /**
      * Construktor
@@ -15,10 +16,12 @@ public class Message {
      * @param timestamp timestamp of the message
      * @param message The message
      */
-    public Message (int messageID, String timestamp, String message) {
+    public Message (int messageID, String timestamp, String message, String clientID) {
         this.messageID = messageID;
         this.timestamp = timestamp;
         this.message = message;
+        this.clientID = clientID;
+
     }
 
     /**
@@ -32,6 +35,22 @@ public class Message {
      */
     public int getMessageID() {
         return messageID;
+    }
+
+    /**
+     * returns the client ID who send the message
+     * @return ID of the message
+     */
+    public String getclientID () {
+        return clientID;
+    }
+
+    /**
+     * set the client ID who send the message
+     * @param clientID set timestamp
+     */
+    public void setclientID(String clientID) {
+        this.clientID = clientID;
     }
 
     /**

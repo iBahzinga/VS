@@ -35,9 +35,9 @@ public class ImplServer implements MessageService{
         if (!deliveryQueue.isEmpty()){
             for (int i = 0; i <= deliveryQueue.size() - 1; i++) {
                 if (msg == null){
-                    msg = builtMessages(i, clientID);
+                    msg = builtMessages(i);
                 } else {
-                    msg = msg + "\n" + builtMessages(i, clientID);
+                    msg = msg + "\n" + builtMessages(i);
                 }
             }
         }
@@ -52,10 +52,18 @@ public class ImplServer implements MessageService{
      * @throws RemoteException
      */
     public void newMessage(String clientID, String message) throws RemoteException {
-        updateQueue(message);
+        updateQueue(message, clientID);
         /* dient nur noch zu testzwecken */
         //System.out.println(message);
         test();
+    }
+
+    /**
+     * built the next message to send it
+     * @return the message containing the ClientID, messageID, the message and the time stamp
+     */
+    private String builtMessages(int count) {
+        return deliveryQueue.get(count).getclientID() + "-" + deliveryQueue.get(count).getMessageID() + ":" + deliveryQueue.get(count).getMessage() + ", " + deliveryQueue.get(count).getTimestamp();
     }
 
     /**
@@ -63,8 +71,8 @@ public class ImplServer implements MessageService{
      * in case the queue have 5 elements, die first message will be deleted and the new message will be added to the queue.
      * @param message A message from the client
      */
-    private void updateQueue(String message) {
-        Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message);
+    private void updateQueue(String message, String clientID) {
+        Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message, clientID);
         if (counterQueue <= 5 ) {
             deliveryQueue.add(newMessage);
             counterQueue++;
@@ -73,14 +81,6 @@ public class ImplServer implements MessageService{
             deliveryQueue.add(newMessage);
             counterQueue++;
         }
-    }
-
-    /**
-     * built the next message to send it
-     * @return the message containing the ClientID, messageID, the message and the time stamp
-     */
-    private String builtMessages(int count, String clientID) {
-        return clientID + "-" + deliveryQueue.get(count).getMessageID() + ":" + deliveryQueue.get(count).getMessage() + ", " + deliveryQueue.get(count).getTimestamp();
     }
 
     private void test () {
