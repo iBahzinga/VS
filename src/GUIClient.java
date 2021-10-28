@@ -43,7 +43,7 @@ public class GUIClient {
         headline.setFont(new Font(font, fontSizeHeader));
 
         /* Set 2nd label */
-        final Label subheadline = new Label("Hallo " + client.getClientID());
+        final Label subheadline = new Label("Hallo " + client.getClientID() + " willkommen auf " + client.getServerP());
         headline.setFont(new Font(font, fontSize));
 
         /* Buttons */

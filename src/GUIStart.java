@@ -71,13 +71,24 @@ public class GUIStart extends Application {
         nameField.setPrefWidth(350);
         nameField.setPromptText("Geben Sie einen Namen ein");
 
+        /* Set label */
+        final Label serverLine = new Label("Set Port");
+        headline.setFont(new Font(font, fontSizeHeader));
+
+        /* Textfield */
+        TextField portField = new TextField();
+        nameField.setPrefWidth(350);
+        nameField.setPromptText("Geben Sie einen Port ein");
+
         /* Buttons */
         Button ok_button = new Button();
         ok_button.setText("OK");
         ok_button.setOnAction( ok -> {
             try {
                 String clientID = nameField.getText() + "@" + InetAddress.getLocalHost().getHostName();
+                String serverP = portField.getText();
                 client.setClientID(clientID);
+                client.setServerP(serverP);
                 guiClient = new GUIClient(font, fontSize, fontSizeHeader, client);
                 guiClient.startClient(new Stage());
                 primaryStage.close();
@@ -99,7 +110,7 @@ public class GUIStart extends Application {
         buttons.setSpacing(20);
 
         VBox vertical = new VBox();
-        vertical.getChildren().addAll(headline, nameField, buttons);
+        vertical.getChildren().addAll(headline, nameField, serverLine, portField, buttons);
         vertical.setPadding(new Insets(15, 15, 15, 15));
         vertical.setSpacing(15);
 

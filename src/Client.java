@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 public class Client /*implements MessageService*/ {
     private static String response;
     private String clientID;
+    private String serverP;
 
     /**
      * Constructor
@@ -33,7 +34,13 @@ public class Client /*implements MessageService*/ {
         return clientID;
     }
 
+    public String getServerP() {
+        return serverP;
+    }
+
     protected void setClientID(String clientID) {
         this.clientID = clientID;
     }
+
+    protected void setServerP(String serverP) { this.serverP = serverP; }
 }
