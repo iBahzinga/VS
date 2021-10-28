@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  *  * @author Daniel Dichte
@@ -15,11 +14,13 @@ import java.util.Queue;
 public class ImplServer implements MessageService{
 
     private int counterQueue;
-    private Queue deliveryQueue;
+    //private Queue deliveryQueue;
+    private LinkedList<Message> deliveryQueue;
 
     public ImplServer () {
         counterQueue = 1;
-        deliveryQueue = new LinkedList();
+        //deliveryQueue = new LinkedList();
+        deliveryQueue = new LinkedList<>();
     }
 
     @Override
@@ -30,7 +31,17 @@ public class ImplServer implements MessageService{
      * @throws RemoteException
      */
     public String nextMessage(String clientID) throws RemoteException {
-        return null;
+        String msg = null;
+        if (!deliveryQueue.isEmpty()){
+            for (int i = 0; i < deliveryQueue.size() - 1; i++) {
+                if (msg == null){
+                    msg = builtMessages(i, clientID);
+                } else {
+                    msg = msg + "\n" + builtMessages(i, clientID);
+                }
+            }
+        }
+        return msg;
     }
 
     @Override
@@ -67,17 +78,7 @@ public class ImplServer implements MessageService{
      * built the next message to send it
      * @return the message containing the ClientID, messageID, the message and the time stamp
      */
-    private String builtMessages() {
-        Message message = null;
-        String nextMessage = null;
-        Queue temp = new LinkedList();
-        for (int i = 0; i < 5; i++){
-            if (!deliveryQueue.isEmpty()) {
-                if (deliveryQueue.element() instanceof Message)
-                    message = (Message) deliveryQueue.element();
-                    nextMessage = "<ClientID>" + "-" + message.getMessageID() + ":" + message.getMessage() + ", " + message.getTimestamp();
-            }
-        }
-        return nextMessage;
+    private String builtMessages(int count, String clientID) {
+        return clientID + "-" + deliveryQueue.get(count).getMessageID() + ":" + deliveryQueue.get(count).getMessage() + ", " + deliveryQueue.get(count).getTimestamp();
     }
 }
