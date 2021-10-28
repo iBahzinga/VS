@@ -18,7 +18,7 @@ public class ImplServer implements MessageService{
     private LinkedList<Message> deliveryQueue;
 
     public ImplServer () {
-        counterQueue = 1;
+        counterQueue = 0;
         //deliveryQueue = new LinkedList();
         deliveryQueue = new LinkedList<>();
     }
@@ -54,7 +54,8 @@ public class ImplServer implements MessageService{
     public void newMessage(String clientID, String message) throws RemoteException {
         updateQueue(message);
         /* dient nur noch zu testzwecken */
-        System.out.println(message);
+        //System.out.println(message);
+        test();
     }
 
     /**
@@ -79,5 +80,11 @@ public class ImplServer implements MessageService{
      */
     private String builtMessages(int count, String clientID) {
         return clientID + "-" + deliveryQueue.get(count).getMessageID() + ":" + deliveryQueue.get(count).getMessage() + ", " + deliveryQueue.get(count).getTimestamp();
+    }
+
+    private void test () {
+        for (int i = 0; i < deliveryQueue.size()-1; i++) {
+            System.out.println(deliveryQueue.get(i).getMessage());
+        }
     }
 }

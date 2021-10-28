@@ -49,7 +49,7 @@ public class GUIListener {
         receivedText.setPrefWidth(350);
         receivedText.setPrefHeight(200);
         receivedText.setEditable(false);
-        receivedText.setText(client.nextMessage(client.getClientID()));
+        receivedText.setText (client.receive());
 
         Button restartButton = new Button();
         restartButton.setText("Update ");

@@ -37,6 +37,10 @@ public class Client implements MessageService {
         }
     }
 
+    public String receive () throws RemoteException {
+        return nextMessage(clientID);
+    }
+
     /**
      * MEthos to return the clientID
      * @return The clientID
@@ -62,8 +66,7 @@ public class Client implements MessageService {
      * @throws RemoteException
      */
     public String nextMessage(String clientID) throws RemoteException {
-        stub.nextMessage(clientID);
-        return null;
+        return stub.nextMessage(clientID);
     }
 
     @Override
