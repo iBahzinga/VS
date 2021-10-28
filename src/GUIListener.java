@@ -46,7 +46,7 @@ public class GUIListener {
         /* Textfield */
         TextArea receivedText = new TextArea();
         receivedText.setPrefWidth(350);
-        receivedText.setPrefHeight(200);
+        receivedText.setPrefHeight(100);
         receivedText.setEditable(false);
         receivedText.setText (client.nextMessage(client.getClientID()));
 
