@@ -62,6 +62,7 @@ public class Client implements MessageService {
      * @throws RemoteException
      */
     public String nextMessage(String clientID) throws RemoteException {
+        stub.nextMessage(clientID);
         return null;
     }
 

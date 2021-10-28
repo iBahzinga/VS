@@ -52,9 +52,7 @@ public class ImplServer implements MessageService{
      * @throws RemoteException
      */
     public void newMessage(String clientID, String message) throws RemoteException {
-
         updateQueue(message);
-
         /* dient nur noch zu testzwecken */
         System.out.println(message);
     }
@@ -68,6 +66,7 @@ public class ImplServer implements MessageService{
         Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message);
         if (counterQueue <= 5 ) {
             deliveryQueue.add(newMessage);
+            counterQueue++;
         } else {
             deliveryQueue.remove();
             deliveryQueue.add(newMessage);

@@ -49,13 +49,13 @@ public class GUIListener {
         receivedText.setPrefWidth(350);
         receivedText.setPrefHeight(200);
         receivedText.setEditable(false);
-
+        receivedText.setText(client.nextMessage(client.getClientID()));
 
         Button restartButton = new Button();
         restartButton.setText("Update ");
         restartButton.setOnAction(restart ->
         {
-            System.out.println( "Restarting Server app!" );
+            System.out.println( "Restarting Rezeption Client!" );
             stage.close();
             Platform.runLater( () -> {
                 try {
