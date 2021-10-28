@@ -55,7 +55,7 @@ public class GUIStart extends Application {
 
     @Override
     /**
-     *
+     * .
      * @param
      */
     public void start(Stage primaryStage) throws Exception {
