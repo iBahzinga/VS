@@ -10,6 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ *  * @author Daniel Dichte
+ *  * @author Pascal Kießler
+ *
+ */
 public class GUIListener {
 
     private String font;
@@ -44,13 +49,13 @@ public class GUIListener {
         receivedText.setPrefWidth(350);
         receivedText.setPrefHeight(200);
         receivedText.setEditable(false);
-
+        receivedText.setText (client.receive());
 
         Button restartButton = new Button();
         restartButton.setText("Update ");
         restartButton.setOnAction(restart ->
         {
-            System.out.println( "Restarting Server app!" );
+            System.out.println( "Restarting Rezeption Client!" );
             stage.close();
             Platform.runLater( () -> {
                 try {

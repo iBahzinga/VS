@@ -13,7 +13,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- *
+ * * @author Daniel Dichte
+ *  * @author Pascal Kießler
  */
 public class GUIWriter {
 

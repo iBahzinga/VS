@@ -2,7 +2,15 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.zip.ZipEntry;
 
+/**
+ *  * @author Daniel Dichte
+ *  * @author Pascal Kießler
+ *
+ */
 public class Server extends ImplServer {
 
     public Server() throws RemoteException{
@@ -15,6 +23,7 @@ public class Server extends ImplServer {
      */
     public static void main(String[] args){
         try {
+
             //Create the next message server
             ImplServer obj = new ImplServer();
 
@@ -31,4 +40,8 @@ public class Server extends ImplServer {
             e.printStackTrace();
         }
     }
+
+
+
+
 }
