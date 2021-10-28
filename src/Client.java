@@ -50,7 +50,7 @@ public class Client implements MessageService {
     }
 
     /**
-     * MEthod to set the clientID
+     * MEthod to set the clientID.
      * @param clientID current clientID
      */
     protected void setClientID(String clientID) {
