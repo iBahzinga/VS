@@ -33,7 +33,7 @@ public class ImplServer implements MessageService{
     public String nextMessage(String clientID) throws RemoteException {
         String msg = null;
         if (!deliveryQueue.isEmpty()){
-            for (int i = 0; i < deliveryQueue.size() - 1; i++) {
+            for (int i = 0; i <= deliveryQueue.size() - 1; i++) {
                 if (msg == null){
                     msg = builtMessages(i, clientID);
                 } else {
@@ -54,7 +54,6 @@ public class ImplServer implements MessageService{
     public void newMessage(String clientID, String message) throws RemoteException {
         updateQueue(message);
         /* dient nur noch zu testzwecken */
-        //System.out.println(message);
         test();
     }
 
@@ -83,7 +82,7 @@ public class ImplServer implements MessageService{
     }
 
     private void test () {
-        for (int i = 0; i < deliveryQueue.size()-1; i++) {
+        for (int i = 0; i <= deliveryQueue.size()-1; i++) {
             System.out.println(deliveryQueue.get(i).getMessage());
         }
     }
