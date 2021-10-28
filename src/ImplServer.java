@@ -71,6 +71,7 @@ public class ImplServer implements MessageService{
         } else {
             deliveryQueue.remove();
             deliveryQueue.add(newMessage);
+            counterQueue++;
         }
     }
 
