@@ -42,6 +42,7 @@ public class GUIClient {
     public void startClient(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Distributed systems");
         StackPane pane = new StackPane();
+        client.init();
 
         /* Set label */
         final Label headline = new Label("Server-Client");

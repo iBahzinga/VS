@@ -20,7 +20,7 @@ public class Client implements MessageService {
     public Client () {
     }
 
-    protected void send (String text) {
+    protected void init () {
         try {
             //Getting registry
             Registry registry = LocateRegistry.getRegistry(null);
@@ -28,17 +28,10 @@ public class Client implements MessageService {
             //Looking up the registry for remote obj
             stub = (MessageService) registry.lookup("Hello");
 
-            //Calling remote method
-            newMessage(clientID, text);
-
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
-    }
-
-    public String receive () throws RemoteException {
-        return nextMessage(clientID);
     }
 
     /**
@@ -50,7 +43,7 @@ public class Client implements MessageService {
     }
 
     /**
-     * MEthod to set the clientID
+     * MEthod to set the clientID.
      * @param clientID current clientID
      */
     protected void setClientID(String clientID) {

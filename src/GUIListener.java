@@ -43,13 +43,12 @@ public class GUIListener {
         final Label headline = new Label("Client-Rezeption");
         headline.setFont(new Font(font, fontSizeHeader));
 
-
         /* Textfield */
         TextArea receivedText = new TextArea();
         receivedText.setPrefWidth(350);
         receivedText.setPrefHeight(200);
         receivedText.setEditable(false);
-        receivedText.setText (client.receive());
+        receivedText.setText (client.nextMessage(client.getClientID()));
 
         Button restartButton = new Button();
         restartButton.setText("Update ");
