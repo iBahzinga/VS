@@ -12,6 +12,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+
 /**
  * * @author Daniel Dichte
  *  * @author Pascal Kießler
@@ -60,7 +62,12 @@ public class GUIWriter {
         Button button_send = new Button();
         button_send.setText("Senden");
         button_send.setOnAction(click -> {
-            client.send(writeField.getText());
+            try {
+                client.newMessage(client.getClientID(), writeField.getText());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                System.err.println("Client exception: " + e.toString());
+            }
         });
 
         /* Button clear */
