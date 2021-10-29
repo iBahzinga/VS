@@ -1,10 +1,11 @@
-
-
-
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  *  * @author Daniel Dichte
@@ -16,11 +17,20 @@ public class ImplServer implements MessageService{
     private int counterQueue;
     //private Queue deliveryQueue;
     private LinkedList<Message> deliveryQueue;
+    private String logPath;
+    private Logger logger;
+    private FileHandler fh;
+    private SimpleFormatter formatter;
 
+    /**
+     *
+     */
     public ImplServer () {
         counterQueue = 0;
         //deliveryQueue = new LinkedList();
         deliveryQueue = new LinkedList<>();
+        logPath = "C:\\Users\\Pascal\\Logfile\\Logfile.log";
+        initLogger();
     }
 
     @Override
@@ -32,6 +42,7 @@ public class ImplServer implements MessageService{
      */
     public String nextMessage(String clientID) throws RemoteException {
         String msg = null;
+        createLogfile(clientID, null);
         if (!deliveryQueue.isEmpty()){
             for (int i = 0; i <= deliveryQueue.size() - 1; i++) {
                 if (msg == null){
@@ -52,6 +63,7 @@ public class ImplServer implements MessageService{
      * @throws RemoteException
      */
     public void newMessage(String clientID, String message) throws RemoteException {
+        createLogfile(clientID, message);
         updateQueue(message, clientID);
         /* dient nur noch zu testzwecken */
         //System.out.println(message);
@@ -83,6 +95,43 @@ public class ImplServer implements MessageService{
         }
     }
 
+
+    /**
+     * Record everything in the logfile
+     * @param clientID ID of the current client
+     * @param message message of the client
+     */
+    private void createLogfile (String clientID, String message) {
+        if (clientID != null && message != null) {
+            logger.info("Client: " + clientID + " hat die folgende Nachricht gesendet:\n" + message + "\n");
+        } else {
+            logger.info("Client: " + clientID + " hat eine Nachrichtenanfrage gestellt.\n");
+        }
+    }
+
+    /**
+     * Initialize the logger to create a logfile during the runtime
+     */
+    private void initLogger () {
+        logger = Logger.getLogger("Logfile");
+        try {
+            fh = new FileHandler(logPath);
+            logger.addHandler(fh);
+            formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logger.setUseParentHandlers(false);
+        logger.info("Server started");
+    }
+
+
+
+
+    /**
+     * This test can be deleted soon
+     */
     private void test () {
         for (int i = 0; i <= deliveryQueue.size()-1; i++) {
             System.out.println(deliveryQueue.get(i).getMessage());
