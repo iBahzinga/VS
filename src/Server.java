@@ -1,7 +1,11 @@
+import java.net.UnknownHostException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.net.InetAddress;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.zip.ZipEntry;
@@ -24,6 +28,8 @@ public class Server extends ImplServer {
     public static void main(String[] args){
         try {
 
+            InetAddress ip = InetAddress.getLocalHost();
+
             //Create the next message server
             ImplServer obj = new ImplServer();
 
@@ -34,8 +40,8 @@ public class Server extends ImplServer {
             //Binding stub in registry
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind("Hello", stub);
-            System.err.println("Server ready...");
-        } catch(RemoteException e) {
+            System.err.println("!--- " + ip + " ---! " + " The Server is ready...");
+        } catch(RemoteException | UnknownHostException e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
         }

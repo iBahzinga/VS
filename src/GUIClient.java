@@ -1,4 +1,4 @@
-import javafx.application.Application;
+import javafx.application .Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -45,7 +45,7 @@ public class GUIClient {
         client.init();
 
         /* Set label */
-        final Label headline = new Label("Server-Client");
+        final Label headline = new Label("Willkommen auf " + client.getServername());
         headline.setFont(new Font(font, fontSizeHeader));
 
         /* Set 2nd label */
