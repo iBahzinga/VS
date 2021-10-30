@@ -1,4 +1,6 @@
 import java.rmi.*;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -12,6 +14,7 @@ import java.rmi.registry.Registry;
 public class Client implements MessageService {
     private static String response;
     private String clientID;
+    private String servername;
     private MessageService stub;
 
     /**
@@ -23,7 +26,7 @@ public class Client implements MessageService {
     protected void init () {
         try {
             //Getting registry
-            Registry registry = LocateRegistry.getRegistry(null);
+            Registry registry = LocateRegistry.getRegistry(servername);
 
             //Looking up the registry for remote obj
             stub = (MessageService) registry.lookup("Hello");
@@ -35,7 +38,7 @@ public class Client implements MessageService {
     }
 
     /**
-     * MEthos to return the clientID
+     * Method to return the clientID
      * @return The clientID
      */
     public String getClientID() {
@@ -43,13 +46,28 @@ public class Client implements MessageService {
     }
 
     /**
-     * MEthod to set the clientID.
+     * Method to return the Servername
+     * @return The clientID
+     */
+    public String getServername() {
+        return servername;
+    }
+
+    /**
+     * Method to set the clientID.
      * @param clientID current clientID
      */
     protected void setClientID(String clientID) {
         this.clientID = clientID;
     }
 
+    /**
+     * Method to set the Server.
+     * @param servername current Server
+     */
+    protected void setServername(String servername) {
+        this.servername = servername;
+    }
 
     @Override
     /**

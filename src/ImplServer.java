@@ -29,7 +29,8 @@ public class ImplServer implements MessageService{
         counterQueue = 0;
         //deliveryQueue = new LinkedList();
         deliveryQueue = new LinkedList<>();
-        logPath = "C:\\Users\\Pascal\\Logfile\\Logfile.log";
+        String dir = System.getProperty("user.dir");
+        logPath = dir;
         initLogger();
     }
 
