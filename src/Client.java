@@ -36,6 +36,7 @@ public class Client implements MessageService {
 
             //Looking up the registry for remote obj
             stub = (MessageService) registry.lookup("Hello");
+            newMessage(getClientID(), "Hallo");
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();

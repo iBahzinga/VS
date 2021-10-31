@@ -6,8 +6,8 @@
 public class ClientID {
 
     private String clientID;
-    private int messageID[];
-    private int gedaechnis;
+    private int messageID;
+    private long gedaechnis;
 
     /**
      * Construktor
@@ -15,9 +15,9 @@ public class ClientID {
      * @param messageID  of the ClientID
      * @param gedaechnis of the ClientID
      */
-    public ClientID(String clientID ,int messageID, int gedaechnis) {
+    public ClientID(String clientID ,int messageID, long gedaechnis) {
         this.clientID = clientID;
-        this.messageID = new int[4];
+        this.messageID = messageID;
         this.gedaechnis = gedaechnis;
     }
 
@@ -38,15 +38,15 @@ public class ClientID {
      * returns the ID of the ClientID
      * @return ID of the ClientID
      */
-    public int getMessageID(int i) {
-        return messageID[i];
+    public int getMessageID() {
+        return messageID;
     }
 
     /**
      * get the gedaechnis of the ClientID
      * @return gedaechnis of ClientID
      */
-    public int getGedaechnis(){
+    public long getGedaechnis(){
         return gedaechnis;
     }
 
@@ -61,17 +61,16 @@ public class ClientID {
     /**
      * set the message ID
      * @param messageID set message ID
-
-    public void setMessageID(int messageID) {
-        this.messageID[] = messageID;
-    }
     */
+    public void setMessageID(int messageID) {
+        this.messageID = messageID;
+    }
 
     /**
      * set the gedaechnis of the ClientID
      * @param gedaechnis set ClientID
      */
-    public void setGedaechnis(int gedaechnis) {
+    public void setGedaechnis(long gedaechnis) {
         this.gedaechnis = gedaechnis;
     }
 }

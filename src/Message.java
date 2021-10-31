@@ -21,7 +21,6 @@ public class Message {
         this.timestamp = timestamp;
         this.message = message;
         this.clientID = clientID;
-
     }
 
     /**
