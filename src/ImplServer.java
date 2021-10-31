@@ -15,22 +15,26 @@ import java.util.logging.SimpleFormatter;
 public class ImplServer implements MessageService{
 
     private int counterQueue;
+    private int countCID;
     //private Queue deliveryQueue;
     private LinkedList<Message> deliveryQueue;
     private String logPath;
     private Logger logger;
     private FileHandler fh;
     private SimpleFormatter formatter;
+    private ClientID clienten[];
 
     /**
      *
      */
     public ImplServer () {
         counterQueue = 0;
+        countCID = 0;
         //deliveryQueue = new LinkedList();
         deliveryQueue = new LinkedList<>();
         logPath = System.getProperty("user.dir");
         initLogger();
+        clienten = new ClientID[10];
     }
 
     @Override
@@ -64,7 +68,18 @@ public class ImplServer implements MessageService{
      */
     public void newMessage(String clientID, String message) throws RemoteException {
         createLogfile(clientID, message);
-        updateQueue(message, clientID);
+        System.out.println(clientID);
+        System.out.println(message);
+        for (int i = 0; i < clienten.length; i++) {
+            System.out.println(clienten[i]);
+            if (clienten[i] == null){
+                 clienten[i] = new ClientID(clientID, counterQueue, 500);
+                 break;
+             } else if (clientID.equals(clienten[i].getclientID())){
+                 updateQueue(message, clientID);
+                 break;
+             }
+        }
         /* dient nur noch zu testzwecken */
         //System.out.println(message);
         test();
@@ -85,14 +100,13 @@ public class ImplServer implements MessageService{
      */
     private void updateQueue(String message, String clientID) {
         Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message, clientID);
-        if (counterQueue <= 5 ) {
+        if (counterQueue < 5 ) {
             deliveryQueue.add(newMessage);
-            counterQueue++;
         } else {
             deliveryQueue.remove();
             deliveryQueue.add(newMessage);
-            counterQueue++;
         }
+        counterQueue++;
     }
 
 
@@ -125,9 +139,6 @@ public class ImplServer implements MessageService{
         logger.setUseParentHandlers(false);
         logger.info("Server started");
     }
-
-
-
 
     /**
      * This test can be deleted soon

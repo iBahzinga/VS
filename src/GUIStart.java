@@ -91,7 +91,7 @@ public class GUIStart extends Application {
                 client.setServername(serverName);
                 guiClient = new GUIClient(font, fontSize, fontSizeHeader, client);
                 guiClient.startClient(new Stage());
-                primaryStage.close();
+                //primaryStage.close();
              } catch (Exception e) {
                 System.err.println("Exception: " + e.toString());
                 e.printStackTrace();
