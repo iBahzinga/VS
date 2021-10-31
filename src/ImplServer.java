@@ -14,23 +14,58 @@ import java.util.logging.SimpleFormatter;
  */
 public class ImplServer implements MessageService{
 
+    private final int MEMORYTIME = 300000; // 5 Minuten
     private int counterQueue;
+    private int countCID;
     //private Queue deliveryQueue;
     private LinkedList<Message> deliveryQueue;
     private String logPath;
     private Logger logger;
     private FileHandler fh;
     private SimpleFormatter formatter;
+    private ClientID clienten[];
 
     /**
      *
      */
     public ImplServer () {
         counterQueue = 0;
+        countCID = 0;
         //deliveryQueue = new LinkedList();
         deliveryQueue = new LinkedList<>();
         logPath = System.getProperty("user.dir");
         initLogger();
+        clienten = new ClientID[10];
+        Thread newThread = new Thread(() -> {
+            while(true) {
+                threadControl();
+                updateClients();
+            }
+        });
+        newThread.start();
+    }
+
+    /**
+     * Controls the memorytime
+     */
+    private void threadControl(){
+        for(int i = 0; i < clienten.length; i++){
+            if (clienten[i] != null){
+                if(clienten[i].getGedaechnis() < System.currentTimeMillis()){
+                    clienten[i] = null;
+                    countCID--;
+                    /*
+                    for (int x = 0; x < clienten.length; x++) {
+                        if (clienten[x] == null) {
+                            System.out.println(x + ": null");
+                        } else {
+                            System.out.println(x + ": " + clienten[x].getclientID());
+                        }
+                    }
+                    */
+                }
+            }
+        }
     }
 
     @Override
@@ -43,12 +78,27 @@ public class ImplServer implements MessageService{
     public String nextMessage(String clientID) throws RemoteException {
         String msg = null;
         createLogfile(clientID, null);
-        if (!deliveryQueue.isEmpty()){
-            for (int i = 0; i <= deliveryQueue.size() - 1; i++) {
-                if (msg == null){
-                    msg = builtMessages(i);
-                } else {
-                    msg = msg + "\n" + builtMessages(i);
+        boolean known = false;
+        for (int i = 0; i < clienten.length; i++) {
+            if (clienten[i] != null){
+                if (clientID.equals(clienten[i].getclientID())) {
+                    clienten[i].setGedaechnis(System.currentTimeMillis() + MEMORYTIME); //+ 5 Minuten
+                    if (!deliveryQueue.isEmpty()){
+
+                        /* durchiterieren der delivery queue */
+                        for (int j = 0; j <= deliveryQueue.size() - 1; j++) {
+
+                            /* Check if the messageID of the client is < as the messageID of the message in the delivery queue  */
+                            if (clienten[i].getMessageID() < deliveryQueue.get(j).getMessageID()) {
+                                if (msg == null){
+                                    msg = builtMessages(j);
+                                } else {
+                                    msg = msg + "\n" + builtMessages(j);
+                                }
+                            }
+                        }
+                        clienten[i].setMessageID(deliveryQueue.get(deliveryQueue.size()-1).getMessageID());
+                    }
                 }
             }
         }
@@ -64,10 +114,36 @@ public class ImplServer implements MessageService{
      */
     public void newMessage(String clientID, String message) throws RemoteException {
         createLogfile(clientID, message);
-        updateQueue(message, clientID);
+        for (int i = 0; i < clienten.length; i++) {
+            if (clienten[i] == null){
+                 clienten[i] = new ClientID(clientID, counterQueue, System.currentTimeMillis() + MEMORYTIME); // + 5 Minuten
+                 countCID++;
+                 break;
+             } else if (clientID.equals(clienten[i].getclientID())){
+                 updateQueue(message, clientID);
+                 break;
+             }
+        }
         /* dient nur noch zu testzwecken */
         //System.out.println(message);
         test();
+    }
+
+    /**
+     * Updates our Client Array in the correct order
+     */
+    private void updateClients(){
+        for(int i = 0; i < countCID; i++){
+            if(clienten[i] == null){
+                for(int j = clienten.length -1; j > i; j--){
+                    if(clienten[j] != null){
+                        clienten[i] = clienten[j];
+                        clienten[j] = null;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -84,15 +160,14 @@ public class ImplServer implements MessageService{
      * @param message A message from the client
      */
     private void updateQueue(String message, String clientID) {
-        Message newMessage = new Message (counterQueue, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message, clientID);
-        if (counterQueue <= 5 ) {
+        Message newMessage = new Message (counterQueue +1, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Timestamp(System.currentTimeMillis())), message, clientID);
+        if (counterQueue < 5 ) {
             deliveryQueue.add(newMessage);
-            counterQueue++;
         } else {
             deliveryQueue.remove();
             deliveryQueue.add(newMessage);
-            counterQueue++;
         }
+        counterQueue++;
     }
 
 
@@ -125,9 +200,6 @@ public class ImplServer implements MessageService{
         logger.setUseParentHandlers(false);
         logger.info("Server started");
     }
-
-
-
 
     /**
      * This test can be deleted soon
