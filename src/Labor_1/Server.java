@@ -1,14 +1,11 @@
+package Labor_1;
+
 import java.net.UnknownHostException;
-import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.net.InetAddress;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.zip.ZipEntry;
 
 /**
  *  * @author Daniel Dichte

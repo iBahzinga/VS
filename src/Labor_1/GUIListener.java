@@ -1,3 +1,5 @@
+package Labor_1;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

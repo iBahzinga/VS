@@ -1,3 +1,5 @@
+package Labor_1;
+
 /**
  * Message
  * @author Daniel Dichte
