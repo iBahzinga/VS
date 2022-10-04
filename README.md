@@ -2,9 +2,26 @@
 
 Dies ist das Readme fuer VS im WiSe 20.12.2021
 
+#Allgemeine Hinweise zum Labor
+
+Als Nutzer sollte der "Networker" ausgewählt werden.
+Wenn man den Networker ausgewählt hat, muss man zwei mal das Passwort "praktikum" eingeben, um danach dann ein eigenes Passwort festlegen zu können.
+
 #Labor 1
 
-%
+Zuerst das Reporitory Clonen oder als Zip herunterladen und entzippen.
+Danach sollte in der IDE das ganze Projekt geöffnet werden.
+
+Hierbei sollte dann erstmal der Kompiler auf Java 8 gestellt werden.  
+Es kann vorkommen das die IDE im nachgang noch meckert, dann sollte man noch mal in den modulen schauen das auch dort entsprechend Java 8 vorbelegt ist. Wenn nicht sollte noch einmal in den Modulsettings (in der Project structure) und in den Projekteistellungen Java 8 als Basic version ausgewählt werden.
+Danach sollte sich das projekt kompillieren lassen.
+
+
+#Starten des ersten Labors
+
+Terminal öffnen wo reg.bat File liegt und RMI Schnittstelle mithilfe des befehls "rmiregistry" starten.
+Danach kann der Code ausgeführt werden (in GUI start liegt die main)
+
 
 #Labor 2
 
