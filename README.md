@@ -9,18 +9,82 @@ Wenn man den Networker ausgewählt hat, muss man zwei mal das Passwort "praktiku
 
 #Labor 1
 
-Zuerst das Reporitory Clonen oder als Zip herunterladen und entzippen.
-Danach sollte in der IDE das ganze Projekt geöffnet werden.
+Vorweg:
 
-Hierbei sollte dann erstmal der Kompiler auf Java 8 gestellt werden.  
-Es kann vorkommen das die IDE im nachgang noch meckert, dann sollte man noch mal in den modulen schauen das auch dort entsprechend Java 8 vorbelegt ist. Wenn nicht sollte noch einmal in den Modulsettings (in der Project structure) und in den Projekteistellungen Java 8 als Basic version ausgewählt werden.
-Danach sollte sich das projekt kompillieren lassen.
-
+1) Reporitory herunterladen und entzippen.
+2) Repo in IDE öffnen.
+3) Kompiler auf java 8 stellen für projekt und module
 
 #Starten des ersten Labors
 
-Terminal öffnen wo reg.bat File liegt und RMI Schnittstelle mithilfe des befehls "rmiregistry" starten.
-Danach kann der Code ausgeführt werden (in GUI start liegt die main)
+1) Terminal öffnen und reg.bat ausführen mit folgendem Command -> rmiregistry
+
+
+#Weitere Infos zu Labor 1
+#RMI-VM-Options
+Requirements:
+- RMI Registry needs to be started before the server starts
+- RMI Registry version should be the same as the used sdk for compiling (IntelliJ can use different sdk version as used in terminal!)
+- The definition of the executed code has to be present on the server, if file:// is used. (Not sure if its also needed to be on the server, when http:// is used. Will the code than be loaded from the public URL?).
+- The codebase property is the root directory of the class files
+
+Setting VM options in IntelliJ:
+Open Run configurations, click Modify options, enable "Add VM options" and paste in VM options field.
+
+Setting VM options in Eclipse:
+Open Run configurations, click Arguments and paste in to "VM arguments:" field.
+
+Linux:
+policy example:
+grant codeBase "file:/home/networker/IdeaProjects/VSPT1/out/production/VSPT1" {
+    permission java.security.AllPermission;
+};
+
+Client:
+-cp /home/mehkir/IdeaProjects/VSRMI/out/production/VSRMI:/home/mehkir/IdeaProjects/VSRMI/message_service.jar -Djava.rmi.server.codebase=file:///home/mehkir/IdeaProjects/VSRMI/out/production/VSRMI/ -Djava.security.policy=security.policy
+
+Server:
+-cp /home/mehkir/IdeaProjects/VSRMI/out/production/VSRMI:/home/mehkir/IdeaProjects/VSRMI/message_service.jar -Djava.rmi.server.codebase=file:///home/mehkir/IdeaProjects/VSRMI/message_service.jar -Djava.rmi.server.hostname=SERVER -Djava.security.policy=security.policy
+
+
+Windows:
+policy example:
+grant codeBase "file:/C:/Users/abs949/eclipse-workspace/VSRMI/bin" {
+    permission java.security.AllPermission;
+};
+
+Client:
+-cp C:\Users\abs949\eclipse-workspace\VSRMI\bin:C:\Users\abs949\eclipse-workspace\VSRMI\message_service.jar -Djava.rmi.server.codebase=file:/C:\Users\abs949\eclipse-workspace\VSRMI\bin -Djava.security.policy=security.policy
+
+Server:
+-cp C:\Users\abs949\eclipse-workspace\VSRMI\bin:C:\Users\abs949\eclipse-workspace\VSRMI\message_service.jar -Djava.rmi.server.codebase=file:/C:\Users\abs949\eclipse-workspace\VSRMI\message_service.jar -Djava.rmi.server.hostname=SERVER -Djava.security.policy=security.policy
+
+Can help to find the cause of problems: -Djava.security.debug=access,failure
+
+
+#Enable Javafx in Linux with openjdk.txt
+IntelliJ:
+1. File -> Project Structure
+2. Libraries
+3. Click + sign -> Java and add:
+   - /usr/lib/jvm/default/lib/javafx.controls.jar
+   - /usr/lib/jvm/default/lib/javafx.graphics.jar
+   - /usr/lib/jvm/default/lib/javafx.base.jar
+   
+Open Run configurations, click Modify options, enable "Add VM options" and paste in VM options field:
+--module-path /usr/lib/jvm/default/lib/javafx.controls.jar:/usr/lib/jvm/default/lib/javafx.graphics.jar:/usr/lib/jvm/default/lib/javafx.base.jar --add-modules javafx.controls
+
+Eclipse:
+1. Right click on Project -> Properties -> Java Build Path
+2. On the right window click Libraries
+3. Click Add External JARs and add:
+   - /usr/lib/jvm/default/lib/javafx.controls.jar
+   - /usr/lib/jvm/default/lib/javafx.graphics.jar
+   - /usr/lib/jvm/default/lib/javafx.base.jar
+   
+Open Run configurations, click Arguments and paste in to "VM arguments:" field:
+--module-path /usr/lib/jvm/default/lib/javafx.controls.jar:/usr/lib/jvm/default/lib/javafx.graphics.jar:/usr/lib/jvm/default/lib/javafx.base.jar --add-modules javafx.controls
+
 
 
 #Labor 2
